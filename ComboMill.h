@@ -247,7 +247,7 @@ public:
 	{
 		assert (iLowerBound <= iUpperBound);
 		assert (0 <= iLowerBound);
-		assert (iUpperBound <= mMemberShip.size());
+		assert (iUpperBound <= mMembership.size());
 		
 		Last();
 		if ((Size() < iLowerBound) or (iUpperBound < Size())) 

@@ -790,7 +790,7 @@ int ConsoleApp::askChoice (const char *iPromptCstr, char *iChoiceCstr, int iDefC
 	if (theIsCurrChoice)
 	{
 		assert (0 <= iDefChoice);
-		assert (iDefChoice < std::strlen (iChoiceCstr));
+		assert (iDefChoice < (int) std::strlen (iChoiceCstr));
 	}
 
 	// Main:

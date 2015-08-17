@@ -314,7 +314,7 @@ MultiLocusModel::ParseHaploidInput (StreamScanner& iScanner, UInt iNumCols)
 		mHaploData->push_back (theDataRow);
 	}
 	
-	assert (mHaploData->size() == theNumRows);
+	assert ((int) mHaploData->size() == theNumRows);
 }
 
 
@@ -396,7 +396,7 @@ MultiLocusModel::ParseDiploidInput (StreamScanner& iScanner, UInt iNumCols)
 	}
 	
 	
-	assert (mDiploData->size() == theNumRows);
+	assert ((int) mDiploData->size() == theNumRows);
 }
 
 
@@ -1200,7 +1200,7 @@ void MultiLocusModel::PlotDiv (int iNumSamples, ofstream& ioPlotStream)
 			{
 				for (int n = m + 1; n < theNumIso; n++ )
 				{
-					assert (thePairNum < mNumPairsIsolates);
+					assert (thePairNum < (int) mNumPairsIsolates);
 					
 					// for every site selected, sum the distances involved
 					for (int o = 0; o < (int) theLociSample.Size(); o++ )
@@ -1530,7 +1530,8 @@ void MultiLocusModel::CalcDiversity
 		}
 
 		// print out stats to stats stream
-		assert (iStatsStream != NULL);
+		// XXX: wtf?
+		// assert (iStatsStream != NULL);
 
 		if (i == 0)
 		{
