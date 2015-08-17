@@ -53,6 +53,8 @@ To Do:
 #define STOP_SBL_NAMESPACE		SBL_NAMESPACE_STOP
 
 
+// get c++ unused var warning to shut up
+#define UNUSED(expr) do { (void)(expr); } while (0)
 
 // *** TYPES *************************************************************/
 

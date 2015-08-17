@@ -150,7 +150,7 @@ void toLower (char* ioTargetCString)
 string::size_type eraseLeadingSpace (string& ioTargetStr)
 //: delete any whitespace at the string front & return the number removed.
 // Whitespace is that defined by isspace(): space, tabs, formfeeds, eoln
-// characters.					
+// characters.
 {
 	string::size_type	theInitSize = ioTargetStr.size();
 	while (ioTargetStr.size() and isspace(ioTargetStr[0]))
@@ -158,8 +158,8 @@ string::size_type eraseLeadingSpace (string& ioTargetStr)
 	return (theInitSize - ioTargetStr.size());
 }
 
-string::size_type eraseTrailingSpace (string& ioTargetStr)							
-//: delete any whitespace at the string end & return the number removed.						
+string::size_type eraseTrailingSpace (string& ioTargetStr)
+//: delete any whitespace at the string end & return the number removed.
 // See eraseLeadingSpace() for further notes.
 {
 	string::size_type theInitSize = ioTargetStr.size();
@@ -168,8 +168,8 @@ string::size_type eraseTrailingSpace (string& ioTargetStr)
 	return (theInitSize - ioTargetStr.size());
 }
 
-string::size_type eraseFlankingSpace (string& ioTargetStr)							
-//: delete whitespace characters at either end & return the number removed.						
+string::size_type eraseFlankingSpace (string& ioTargetStr)
+//: delete whitespace characters at either end & return the number removed.
 // See eraseLeadingSpace() for further notes.
 {
 	string::size_type theLoss = 0;
@@ -179,8 +179,8 @@ string::size_type eraseFlankingSpace (string& ioTargetStr)
 }
 
 
-string::size_type eraseInternalSpace (string& ioTargetStr)							
-//: delete whitespace characters at either end & return the number removed.						
+string::size_type eraseInternalSpace (string& ioTargetStr)
+//: delete whitespace characters at either end & return the number removed.
 // See eraseLeadingSpace() for further notes.
 {
 	string::size_type theLoss = 0;
@@ -197,12 +197,12 @@ string::size_type eraseInternalSpace (string& ioTargetStr)
 			q++;
 		}
 	}
-	
+
 	return theLoss;
 }
 
-string::size_type eraseAllSpace (string& ioTargetStr)							
-//: delete all flanking or intrenal whitespace characters						
+string::size_type eraseAllSpace (string& ioTargetStr)
+//: delete all flanking or intrenal whitespace characters
 // See eraseLeadingSpace() for further notes.
 {
 	string::size_type theLoss = 0;
@@ -239,10 +239,10 @@ string::size_type reduceSpace (std::string& ioTargetStr)
 			q++;
 		}
 	}
-	
+
 	return theLoss;
 }
-				
+
 
 // *** CONVERSION FXNS ***************************************************/
 #pragma mark -
@@ -262,7 +262,7 @@ double toDouble (const std::string& ikSrcStr)
 		//throw ConversionError (ikSrcStr.c_str(), "double");
 		// TO DO
 	}
-	
+
 	// Main:
 	return std::strtod (ikSrcStr.c_str(), NULL);
 }
@@ -278,21 +278,21 @@ bool isReal (const std::string& ikTargetStr)
 //: is this string a floating point number?
 {
 	std::string theValidChars ("+-.1234567890");
-	
+
 	// the first character must be +, -, ., or a digit
 	if (not isSubsetOf (ikTargetStr.begin(), ikTargetStr.begin() + 1,
 		theValidChars.begin(), theValidChars.end()))
 		return false;
-		
+
 	// all subsequent must be , ., or a digit
 	if (not isSubsetOf (ikTargetStr.begin() + 1, ikTargetStr.end(),
 		theValidChars.begin() + 2, theValidChars.end()))
 		return false;
-		
+
 	// 1 and only 1 decimal place
 	if (std::count (ikTargetStr.begin(), ikTargetStr.end(), '.') != 1)
 		return false;
-		
+
 	// otherwise it's all fine
 	return true;
 }
@@ -302,21 +302,21 @@ bool isWhole (const std::string& ikTargetStr)
 //: is this string a whole number?
 {
 	std::string theValidChars ("+-1234567890");
-	
+
 	// if the targetstring is "0" is okay
 	if (ikTargetStr == "0")
 		return true;
-		
+
 	// the first character must be +, -, ., or a nonzero digit
 	if (not isSubsetOf (ikTargetStr.begin(), ikTargetStr.begin() + 1,
 		theValidChars.begin(), theValidChars.end() - 1))
 		return false;
-		
+
 	// all subsequent must be digits
 	if (not isSubsetOf (ikTargetStr.begin() + 1, ikTargetStr.end(),
 		theValidChars.begin() + 2, theValidChars.end()))
 		return false;
-		
+
 	// otherwise it's all fine
 	return true;
 }
@@ -335,14 +335,14 @@ bool isWhole (const std::string& ikTargetStr)
 
 		DBG_MSG ("");
 		DBG_MSG ("* Testing membership functions:");
-		
+
 		std::string theStr1 ("abc");
 		std::string theStr2 ("c");
 		std::string theStr3 ("dfb");
 		DBG_MSG ("String 1 is " << theStr1);
 		DBG_MSG ("String 2 is " << theStr2);
 		DBG_MSG ("String 3 is " << theStr3);
-		
+
 		bool theResult[6];
 		theResult[0] = isMemberOf (theStr1.c_str(), theStr2);
 		theResult[1] = isMemberOf (theStr1.c_str(), theStr3);
@@ -350,7 +350,7 @@ bool isWhole (const std::string& ikTargetStr)
 		theResult[3] = isMemberOf (theStr2.c_str(), theStr3);
 		theResult[4] = isMemberOf (theStr3.c_str(), theStr1);
 		theResult[5] = isMemberOf (theStr3.c_str(), theStr2);
-		
+
 		DBG_MSG ("The seq membership results are:");
 		DBG_MSG ("  is string 1 in string 2 (expect t): " << theResult[0]);
 		DBG_MSG ("  is string 1 in string 3 (expect t): " << theResult[1]);
@@ -366,7 +366,7 @@ bool isWhole (const std::string& ikTargetStr)
 			theStr2));
 		DBG_MSG ("  is b in string 3 (expect t): " << isMemberOf ('b',
 			theStr3));
-			
+
 		DBG_MSG ("Finished testing string utils.");
 	}
 
@@ -382,17 +382,17 @@ bool isWhole (const std::string& ikTargetStr)
 void P2StlStr (const uchar* iSrcPStr, string& ioDestStlStr)
 {
 	char  theTmpCStr[256];
-	P2CStr (iSrcPStr, theTmpCStr);		
+	P2CStr (iSrcPStr, theTmpCStr);
 	ioDestStlStr = theTmpCStr;
 }
 
-void P2CStr (const uchar* iSrcPStr, char* ioDestCStr)							
+void P2CStr (const uchar* iSrcPStr, char* ioDestCStr)
 {
 	// if the string is longer than 255, clip it to fit
 	int theLength = int (iSrcPStr[0]);
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	for (int i = 0; i < theLength; i++)
 	{
 		ioDestCStr[i] = char (iSrcPStr[i+1]);
@@ -400,15 +400,15 @@ void P2CStr (const uchar* iSrcPStr, char* ioDestCStr)
 	ioDestCStr[theLength] = '\0';
 }
 
-void C2PStr (const char* iSrcCStr, uchar* ioDestPStr)									
+void C2PStr (const char* iSrcCStr, uchar* ioDestPStr)
 {
 	// if the string is longer than 255, clip it to fit
-	ulong  theLength = strlen (iSrcCStr);	
+	ulong  theLength = strlen (iSrcCStr);
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	ioDestPStr[0] = uchar (theLength);
-	for (int i = 0; i < theLength; i++)
+	for (int i = 0; i < (int) theLength; i++)
 	{
 		ioDestPStr[i+1] = uchar (iSrcCStr[i]);
 	}
@@ -417,12 +417,12 @@ void C2PStr (const char* iSrcCStr, uchar* ioDestPStr)
 void Stl2PStr (const string& iSrcStlStr, uchar* ioDestPStr)
 {
 	// if the string is longer than 255, clip it to fit
-	int theLength = int (iSrcStlStr.length());	
+	int theLength = int (iSrcStlStr.length());
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	ioDestPStr[0] = uchar (theLength);
-	for (ulong i = 0; i < theLength; i++)
+	for (int i = 0; i < theLength; i++)
 	{
 		ioDestPStr[i+1] = uchar (iSrcStlStr[i]);
 	}
@@ -476,7 +476,7 @@ void MakeLowercase (char* ioTargetCString)
 	toLower (ioTargetCString);
 }
 
-string::size_type StripLeadingWhitespace (string& ioTargetStr)							
+string::size_type StripLeadingWhitespace (string& ioTargetStr)
 {
 	string::size_type	theInitSize = ioTargetStr.size();
 	while (ioTargetStr.size() and isspace(ioTargetStr[0]))
@@ -484,7 +484,7 @@ string::size_type StripLeadingWhitespace (string& ioTargetStr)
 	return (theInitSize - ioTargetStr.size());
 }
 
-string::size_type StripTrailingWhitespace (string& ioTargetStr)							
+string::size_type StripTrailingWhitespace (string& ioTargetStr)
 {
 	string::size_type	theInitSize = ioTargetStr.size();
 	while (ioTargetStr.size() and isspace(ioTargetStr[ioTargetStr.size()]))
@@ -492,7 +492,7 @@ string::size_type StripTrailingWhitespace (string& ioTargetStr)
 	return (theInitSize - ioTargetStr.size());
 }
 
-string::size_type StripFlankingWhitespace (string& ioTargetStr)							
+string::size_type StripFlankingWhitespace (string& ioTargetStr)
 {
 	string::size_type theLoss = 0;
 	theLoss += StripTrailingWhitespace (ioTargetStr);
@@ -503,12 +503,12 @@ string::size_type StripFlankingWhitespace (string& ioTargetStr)
 
 // *** TOKENIZING FXNS
 
-int Split (string& iSrcString, vector<string>& ioDestVector, char iDelimiter)							
+int Split (string& iSrcString, vector<string>& ioDestVector, char iDelimiter)
 {
 	string::size_type		theStrLen = iSrcString.length();
 	string	theDestString;
 	int		theNumTokens = 0;
-	
+
 	for (string::size_type i = 0; i < theStrLen; i++)
 	{
 		if (iSrcString[i] == iDelimiter)
@@ -522,16 +522,16 @@ int Split (string& iSrcString, vector<string>& ioDestVector, char iDelimiter)
 			theDestString += iSrcString[i];
 		}
 	}
-	
+
 	ioDestVector.push_back (theDestString);
 	return (theNumTokens + 1);
 }
 
-void Merge (vector<string>& iSrcVector, string& oDestString, char* iDelimiter)							
+void Merge (vector<string>& iSrcVector, string& oDestString, char const iDelimiter)
 {
 	if (iSrcVector.size() == 0)
 		return;
-		
+
 	vector<string>::iterator p = iSrcVector.begin();
 	while (p != (iSrcVector.end() - 1))
 	{
@@ -568,21 +568,21 @@ void MakeStlString (uchar* iDestPString, string& oStlString)
 	oStlString.assign ((char*) iDestPString + 1, iDestPString[0]);
 }
 
-uchar* ReturnPString (char* iCString)							
+uchar* ReturnPString (char* iCString)
 {
 	static uchar	theBuffer[256];
 	string::size_type 		theLength = strlen(iCString);
-	
+
 	// if the string is longer than 255, clip it to fit
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	theBuffer[0] = uchar (theLength);
 	for (string::size_type i = 0; i < theLength; i++)
 	{
 		theBuffer[i+1] = uchar (iCString[i]);
 	}
-	
+
 	return theBuffer;
 }
 
@@ -590,28 +590,28 @@ const uchar* ReturnPString (string& iStlString)
 {
 	static uchar	theBuffer[256];
 	string::size_type theLength = iStlString.length();
-	
+
 	// if the string is longer than 255, clip it to fit
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	theBuffer[0] = uchar (theLength);
 	for (string::size_type i = 0; i < theLength; i++)
 	{
 		theBuffer[i+1] = uchar (iStlString[i]);
 	}
-	
+
 	return theBuffer;
 }
 
 void MakePString (string& iStlString, uchar* ioDestPString)
 {
 	string::size_type theLength = iStlString.length();
-	
+
 	// if the string is longer than 255, clip it to fit
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	ioDestPString[0] = uchar (theLength);
 	for (string::size_type i = 0; i < theLength; i++)
 	{
@@ -628,17 +628,17 @@ uchar* MakePString (string *iStlString)
 {
 	static uchar	theBuffer[256];
 	string::size_type		theLength = iStlString->length();
-	
+
 	// if the string is longer than 255, clip it to fit
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	theBuffer[0] = uchar (theLength);
 	for (string::size_type i = 0; i < theLength; i++)
 	{
 		theBuffer[i+1] = uchar (iStlString->at(i));
 	}
-	
+
 	return theBuffer;
 }
 
@@ -646,17 +646,17 @@ uchar* MakePString (char *iCString)
 {
 	static uchar	theBuffer[256];
 	ulong 			theLength = ulong (strlen(iCString));
-	
+
 	// if the string is longer than 255, clip it to fit
 	if (255 < theLength)
 		theLength = 255;
-	
+
 	theBuffer[0] = uchar (theLength);
 	for (ulong i = 0; i < theLength; i++)
 	{
 		theBuffer[i+1] = uchar (iCString[i]);
 	}
-	
+
 	return theBuffer;
 }
 
@@ -678,13 +678,13 @@ bool PStrStripSuffix (uchar* iPString)
 	int i;
 	for (i = theLength; (0 < i) and iPString[i] != '.'; i--)
 		/* empty loop */ ;
-	
+
 	// if found beginning of suffix
 	if (iPString[i] == '.')
 	{
 		iPString[i] = '\0';
 		iPString[0] = uchar (i - 1);
-		
+
 		return true;
 	}
 	else
@@ -719,7 +719,7 @@ void PStrConcat
 	string::size_type theDestLen = ioDestStr[0];
 	string::size_type theSuffLen = iSuffixStr[0];
 	string::size_type theXsLen = theDestLen + theSuffLen - iSizeLimit;
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
@@ -730,7 +730,7 @@ void PStrConcat
 		ioDestStr[0] -= theXsLen;
 		theDestLen = ioDestStr[0];
 	}
-	
+
 	// then just join them together & incr length
 	std::memcpy (&ioDestStr[theDestLen + 1], &iSuffixStr[1], theSuffLen);
 	ioDestStr[0] += theSuffLen;
@@ -753,7 +753,7 @@ bool ReplacePStrSuffix
 // STRING CONCAT
 // The raison d'etre of this function is to allow the safe construction 
 // of file names, say by adding a suffix on to the end of the original
-// file name. The optional argument sticks an ellipsis (É) where the 
+// file name. The optional argument sticks an ellipsis (...) where the 
 // trimming took place.
 void StringConcat
 // CHANGES:
@@ -765,14 +765,14 @@ void StringConcat
 	long theDestLen = ioDestStr.size();
 	long theSuffLen = std::strlen (iSuffixStr);
 	long theXsLen = theDestLen + theSuffLen - iSizeLimit;
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
 		// shift end token to necessary position
 		ioDestStr.erase (ioDestStr.size() - theXsLen, theXsLen);
 	}
-	
+
 	// then just join them together
 	ioDestStr += iSuffixStr;
 }
@@ -792,30 +792,30 @@ void StringUtils_Test ()
 	char*				theCString = "   It was the   worst of   times  ";
 	DBG_MSG ("StlString is \"" << theStlString << "\"");
 	DBG_MSG ("CString is \"" << theCString << "\"");
-	
+
 	DBG_MSG ("Test membership fxns ...");
-	DBG_MSG ("h found in StlString: " << isMemberOf ('h', theStlString));	
+	DBG_MSG ("h found in StlString: " << isMemberOf ('h', theStlString));
 	DBG_MSG ("h found in StlString 8-16: " << isMemberOf ('h', theStlString.begin()
-		+ 8, theStlString.begin() + 16));	
-	DBG_MSG ("h found in CString: " << isMemberOf ('h', theCString));	
+		+ 8, theStlString.begin() + 16));
+	DBG_MSG ("h found in CString: " << isMemberOf ('h', theCString));
 
 	DBG_MSG ("Test transformation fxns ...");
 	toUpper (theStlString.begin(), theStlString.begin() + 12);
-	DBG_MSG ("StlString toupper 0-12: \"" << theStlString << "\"");	
+	DBG_MSG ("StlString toupper 0-12: \"" << theStlString << "\"");
 	toUpper (theStlString);
-	DBG_MSG ("StlString toupper: \"" << theStlString << "\"");	
+	DBG_MSG ("StlString toupper: \"" << theStlString << "\"");
 	toLower (theCString);
-	DBG_MSG ("CString tolower: \"" << theCString << "\"");	
+	DBG_MSG ("CString tolower: \"" << theCString << "\"");
 	std::string theDummyStr;
 	theDummyStr = theStlString;
-	eraseLeadingSpace (theDummyStr);						
-	DBG_MSG ("StlString erase leading: \"" << theDummyStr << "\"");	
+	eraseLeadingSpace (theDummyStr);
+	DBG_MSG ("StlString erase leading: \"" << theDummyStr << "\"");
 	theDummyStr = theStlString;
-	eraseTrailingSpace (theDummyStr);						
-	DBG_MSG ("StlString erase trailing: \"" << theDummyStr << "\"");	
+	eraseTrailingSpace (theDummyStr);
+	DBG_MSG ("StlString erase trailing: \"" << theDummyStr << "\"");
 	theDummyStr = theStlString;
-	eraseFlankingSpace (theDummyStr);						
-	DBG_MSG ("StlString erase flanking: \"" << theDummyStr << "\"");	
+	eraseFlankingSpace (theDummyStr);
+	DBG_MSG ("StlString erase flanking: \"" << theDummyStr << "\"");
 
 	DBG_MSG ("Test split & join ...");
 	vector<string>		theStrArr;
@@ -826,7 +826,7 @@ void StringUtils_Test ()
 	for (p = theStrArr.begin(); p != theStrArr.end(); p++)
 		DBG_MSG ("\"" << *p << "\"");
 	std::string theTmpStr;
-	join (theStrArr.begin(), theStrArr.end(), theTmpStr, '*');	
+	join (theStrArr.begin(), theStrArr.end(), theTmpStr, '*');
 	DBG_MSG ("The join string: " << theTmpStr);
 
 	DBG_MSG ("Test conversions ...");
@@ -846,8 +846,8 @@ void StringUtils_Test ()
 	DBG_MSG ("Convert a pascal string: \"" << theConvCStr << "\"");
 
 
-	
-	
+
+
 	DBG_MSG ("*** Finished testing StringUtils");
 }
 
@@ -869,7 +869,7 @@ bool iAddEllipsis)
 	string::size_type theDestLen = std::strlen (ioDestStr);
 	string::size_type theSuffLen = std::strlen (ikSuffixStr);
 	string::size_type theXsLen;
-	
+
 	// 3 case of calculating the excess length
 	switch (iSizeLimit)
 	{
@@ -877,13 +877,13 @@ bool iAddEllipsis)
 		case kStr_NoLimit:
 			theXsLen = 0;
 			break;
-		
+
 		// natural limit: an error since there is no natural limit to C
 		// strings, so there is no safe number
 		case kStr_NaturalLimit:
 			assert(false);
 			break;
-		
+
 		// finally: use a supplied limit which in the case of kStr_Limit
 		// is 255
 		case kStr_Limit:
@@ -891,7 +891,7 @@ bool iAddEllipsis)
 			theXsLen = theDestLen + theSuffLen - iSizeLimit;
 			break;
 	}
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
@@ -900,7 +900,7 @@ bool iAddEllipsis)
 		if (iAddEllipsis)
 			ioDestStr[theDestLen - theXsLen - 1] = kChar_Ellipsis;
 	}
-	
+
 	// then just join them together
 	std::strcat (ioDestStr,ikSuffixStr);
 }
@@ -912,7 +912,7 @@ void AddExtension
 	string::size_type theDestLen = ioDestStr[0];
 	string::size_type theSuffLen = iSuffixStr[0];
 	string::size_type theXsLen;
-	
+
 	// 3 case of calculating the excess length
 	switch (iSizeLimit)
 	{
@@ -920,12 +920,12 @@ void AddExtension
 		case kStr_NoLimit:
 			theXsLen = 0;
 			break;
-		
+
 		// natural limit: for pascal strings this is 255
 		case kStr_NaturalLimit:
 			theXsLen = theDestLen + theSuffLen - 255;
 			break;
-		
+
 		// finally: use a supplied limit which in the case of kStr_Limit
 		// is 255
 		case kStr_Limit:
@@ -933,7 +933,7 @@ void AddExtension
 			theXsLen = theDestLen + theSuffLen - iSizeLimit;
 			break;
 	}
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
@@ -944,7 +944,7 @@ void AddExtension
 		ioDestStr[0] -= theXsLen;
 		theDestLen = ioDestStr[0];
 	}
-	
+
 	// then just join them together & incr length
 	std::memcpy (&ioDestStr[theDestLen + 1], &iSuffixStr[1], theSuffLen);
 	ioDestStr[0] += theSuffLen;
@@ -957,7 +957,7 @@ void AddExtension
 	string::size_type theDestLen = ioDestStr.size();
 	string::size_type theSuffLen = std::strlen (iSuffixStr);
 	string::size_type theXsLen = theDestLen + theSuffLen - iSizeLimit;
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
@@ -966,27 +966,27 @@ void AddExtension
 		if (iAddEllipsis)
 			ioDestStr[ioDestStr.size() - 1] = kChar_Ellipsis;
 	}
-	
+
 	// then just join them together
 	ioDestStr += iSuffixStr;
 }
 
-					
+
 bool StripExtension	(uchar* ioPString)
 {
 	int theLength = ioPString[0];
 	int i;
-	
+
 	// step back along string until you find suffix start
 	for (i = theLength; (0 < i) and ioPString[i] != '.'; i--)
 		/* empty loop */ ;
-	
+
 	// if found beginning of suffix
 	if (ioPString[i] == '.')
 	{
 		ioPString[i] = '\0';
 		ioPString[0] = uchar (i - 1);
-		
+
 		return true;
 	}
 	else
@@ -1006,17 +1006,17 @@ bool StripExtension	(string& ioTargetString)
 {
 	string::size_type theLength = ioTargetString.length() - 1;
 	string::size_type i;
-	
+
 	// step back along string until you find suffix start
 	for (i = theLength; (0 < i) and ioTargetString[i] != '.'; i--)
 		/* empty loop */ ;
-	
+
 	// if found beginning of suffix
 	if (ioTargetString[i] == '.')
 	{
 		ioTargetString.erase (i);
 		ioTargetString[i] = '\0';
-		
+
 		return true;
 	}
 	else
@@ -1070,7 +1070,7 @@ int iSizeLimit, bool iAddEllipsis)
 bool PStrEndsWith (uchar* iTargetPStr, uchar* iSuffixPStr)
 {
 	assert (iSuffixPStr[0] <= iTargetPStr[0]);
-	
+
 	int theSuffixStart = iTargetPStr[0] - iSuffixPStr[0] + 1;
 	return (not std::memcmp (&iTargetPStr[theSuffixStart], &iSuffixPStr[1],
 		iSuffixPStr[0]));
@@ -1081,12 +1081,12 @@ bool PStrEndsWith (uchar* iTargetPStr, char* iSuffixCStr)
 {
 	int theSuffixLength = int (std::strlen (iSuffixCStr));
 	assert (theSuffixLength <= iTargetPStr[0]);
-	
+
 	int theSuffixStart = iTargetPStr[0] - theSuffixLength + 1;
 	return (not std::memcmp (&iTargetPStr[theSuffixStart],
 		&iSuffixCStr[0], ulong (theSuffixLength)));
 }
-				
+
 
 
 
@@ -1104,7 +1104,7 @@ void StrConcat
 	long theDestLen = std::strlen (ioDestStr);
 	long theSuffLen = std::strlen (iSuffixStr);
 	long theXsLen = theDestLen + theSuffLen - iSizeLimit;
-	
+
 	if (0 < theXsLen)
 	{
 		// if dest string must be trimmed to fit length
@@ -1113,7 +1113,7 @@ void StrConcat
 		if (iAddEllipsis)
 			ioDestStr[theDestLen - theXsLen - 1] = kChar_Ellipsis;
 	}
-	
+
 	// then just join them together
 	std::strcat (ioDestStr,iSuffixStr);
 }

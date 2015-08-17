@@ -154,10 +154,12 @@ public:
 		{}
 	ExpectedError (const char* ikExpSymbol, const char* ikEncSymbol = "")
 		{
+			UNUSED (ikEncSymbol); // XXX: shut that compiler up
+			
 			mDesc = "expected \'";
 			mDesc += ikExpSymbol;
 			mDesc += "\'";
-			if (ikEncSymbol != "") // if encountered symbol supplied
+			if (std::strcmp (ikEncSymbol, "")) // if encountered symbol supplied
 			{
 				mDesc += ", found \'";
 				mDesc += ikEncSymbol;			
@@ -200,10 +202,10 @@ public:
 			mDesc = "cannot convert \'";
 			mDesc += ikSrc;
 			mDesc += "\'";
-			if (ikDest != "") // if encountered symbol supplied
+			if (std::strcmp (ikDest, "")) // if encountered symbol supplied
 			{
 				mDesc += " to ";
-				mDesc += ikDest;			
+				mDesc += ikDest;
 			}
 		}
 		

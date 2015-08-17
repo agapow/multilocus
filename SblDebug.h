@@ -194,7 +194,7 @@ To Do:
 #else
 
 	
-	#define NDEBUG				// switch cassert off 
+	//#define NDEBUG				// switch cassert off 
 	#define DEBUG_NEW 0		// switch DebugNew off
 	
 	// In a non debug situation, the debug calls are defined as nothing. To

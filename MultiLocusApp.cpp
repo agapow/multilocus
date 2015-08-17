@@ -439,7 +439,7 @@ void MultiLocusApp::CalcPopDiffChoice ()
 		}
 		else
 		{
-			char theSearchChoice = AskMultiChoice ("Analyse all or a subset of populations", "as");
+			char theSearchChoice = askMultiChoice ("Analyse all or a subset of populations", "as");
 			assert ((theSearchChoice == 'a') or (theSearchChoice == 's'));
 			theSearchAll = (theSearchChoice == 'a');
 		}
@@ -473,14 +473,14 @@ void MultiLocusApp::CalcPopDiffChoice ()
 			
 			theSelectedPops.Sort();
 			cout << "Analysing populations:";
-			for (int i = 0; i < theSelectedPops.Size(); i++)
+			for (int i = 0; i < (int) theSelectedPops.Size(); i++)
 				cout << " " << theSelectedPops[i];
 			cout << endl;
 		}
 		else
 		{
 			cout << "Analysing all populations ..." << endl;
-			for (int i = 0; i < theNumPops; i++)
+			for (int i = 0; i < (int) theNumPops; i++)
 				theSelectedPops.Add(i);
 		}
 			
@@ -499,7 +499,7 @@ void MultiLocusApp::CalcPopDiffChoice ()
 		}
 		else
 		{
-			for (int i = 0; i < (theSelectedPops.Size() - 1); i++)
+			for (int i = 0; i < int (theSelectedPops.Size() - 1); i++)
 				theFileSuffixStrm << theSelectedPops[i] << ",";
 			theFileSuffixStrm << theSelectedPops[theSelectedPops.Size() - 1];
 			
@@ -755,7 +755,7 @@ void MultiLocusApp::DefLinkageGroups ()
 		// from 1 to (the number of isolates less the number already
 		// allocated and less the number of partitions left to do).
 		vector <int>	theParts;
-		for (int theGroupIndex = 0; theGroupIndex < (theNumGroups - 1); theGroupIndex++)
+		for (int theGroupIndex = 0; theGroupIndex < int (theNumGroups - 1); theGroupIndex++)
 		{	
 			// build prompt
 			// establish range of possible figures
@@ -824,7 +824,7 @@ void MultiLocusApp::DefPopGroups ()
 		// from 1 to (the number of isolates less the number already
 		// allocated and less the number of pops left to do).
 		vector <int>	thePops;
-		for (int theGroupIndex = 0; theGroupIndex < (theNumGroups - 1); theGroupIndex++)
+		for (int theGroupIndex = 0; theGroupIndex < int (theNumGroups - 1); theGroupIndex++)
 		{	
 			// build prompt
 			// establish range of possible figures

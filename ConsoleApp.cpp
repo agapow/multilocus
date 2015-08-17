@@ -182,16 +182,16 @@ void ConsoleApp::PrintAboutString (string& iContentString)
 			theSpaceBefore = (UInt) (mAboutBoxWidth - 2 - theLengthContent) / 2,
 			theSpaceAfter = (UInt) mAboutBoxWidth - 2 - theLengthContent - theSpaceBefore;
 
-	for (int i = 0; i < mAboutBoxIndent; i++)
+	for (int i = 0; i < (int) mAboutBoxIndent; i++)
 		cout << " ";
 	cout << "*";
 	
-	for (int i = 0; i < theSpaceBefore; i++)
+	for (int i = 0; i < (int) theSpaceBefore; i++)
 		cout << " ";
 		
 	cout << iContentString.c_str();
 	
-	for (int i = 0; i < theSpaceAfter; i++)
+	for (int i = 0; i < (int) theSpaceAfter; i++)
 		cout << " ";
 		
 	cout << "*" << endl;	
@@ -199,9 +199,9 @@ void ConsoleApp::PrintAboutString (string& iContentString)
 
 void ConsoleApp::PrintAboutBorder ()
 {
-	for (int i = 0; i < mAboutBoxIndent; i++)
+	for (int i = 0; i < (int) mAboutBoxIndent; i++)
 		cout << " ";
-	for (int i = 0; i < mAboutBoxWidth; i++)
+	for (int i = 0; i < (int) mAboutBoxWidth; i++)
 		cout << "*";
 	cout << endl;
 }
@@ -839,7 +839,7 @@ int ConsoleApp::askChoice (const char *iPromptCstr, char *iChoiceCstr, int iDefC
 }
 
 
-char ConsoleApp::askMultiChoice (const char *iPromptCstr, char *iChoiceStr)
+char ConsoleApp::askMultiChoice (const char *iPromptCstr, const char iChoiceStr[])
 // Asks the user a question, and allows one of the chars in the choice
 // string as an answer.
 // To Do: strip whitespace off front and back of answer.
@@ -911,6 +911,7 @@ char ConsoleApp::askMultiChoice (const char *iPromptCstr, char *iChoiceStr, char
 
 void ConsoleApp::AskStringQuestion (const char* iPrompt, char* oAnswer)
 {
+	UNUSED (oAnswer);
 	// return askString (iPrompt, oAnswer);
 	askString (iPrompt);
 }
@@ -946,11 +947,6 @@ bool ConsoleApp::AskEitherOrQuestion
 (const char *iPromptCstr, char iChoice1, char iChoice2)
 { return askEitherOr (iPromptCstr, iChoice1, iChoice2); }
 
-char ConsoleApp::AskMultiChoice (const char *iPromptCstr, char *iChoiceStr)
-{ return askMultiChoice (iPromptCstr, iChoiceStr); }
-
-char ConsoleApp::AskMultiChoice (const char *iPromptCstr, char *iChoiceStr, char iCurrChoice)
-{ return askMultiChoice (iPromptCstr, iChoiceStr, iCurrChoice); }
 
 
 SBL_NAMESPACE_STOP

@@ -71,8 +71,8 @@ using sbl::StringConcat;
 
 bool IsNotDigit (char& iChar);
 
-#define ASSERT_VALIDINDEX(x,y)	assert(0 <= x and x < GetNumRows()); \
-											assert(0 <= y and y < GetNumCols())
+#define ASSERT_VALIDINDEX(x,y)	assert(0 <= x and x < (int) GetNumRows()); \
+											assert(0 <= y and y < (int) GetNumCols())
 
 enum pval_t
 {
@@ -282,7 +282,7 @@ MultiLocusModel::ParseHaploidInput (StreamScanner& iScanner, UInt iNumCols)
 			iScanner.UnreadChar(theInChar);
 			
 		theNumRows++;
-		for (int i = 0; i < (iNumCols - 1); i++)
+		for (int i = 0; i < int (iNumCols - 1); i++)
 		{
 			// get allele token
 			iScanner.ReadUntil (theInToken, "\t");
@@ -346,7 +346,7 @@ MultiLocusModel::ParseDiploidInput (StreamScanner& iScanner, UInt iNumCols)
 		theNumRows++;
 		theCurrAllele.transNumDTypes = 0;
 		
-		for (int i = 0; i < (iNumCols - 1); i++)
+		for (int i = 0; i < int (iNumCols - 1); i++)
 		{
 			// get first allele
 			iScanner.ReadUntil (theInToken, "/");
@@ -411,7 +411,7 @@ bool MultiLocusModel::IsValidAllele (string& iAlleleStr)
 	if (IsMissing (iAlleleStr))
 		return true;
 	// must otherwise consist of an alphanumeric string
-	for (int i = 0; i < iAlleleStr.size(); i++)
+	for (int i = 0; i < (int) iAlleleStr.size(); i++)
 	{
 		if (not isalnum (iAlleleStr[i]))
 			return false;
@@ -604,9 +604,9 @@ void MultiLocusModel::DetermineDimensions ()
 // Essentially asking "is it an integer?"
 bool MultiLocusModel::IsDataRankable ()
 {
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			if (GetPloidy() == kPloidy_Haploid)
 			{
@@ -648,7 +648,7 @@ bool MultiLocusModel::ExcludeMissingIso ()
 	
 	// collect the indexes of "missing" rows
 	vector <int>	theDeadRows;	
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		if (IsRowMissing (i))
 			theDeadRows.push_back (i);
@@ -675,7 +675,7 @@ bool MultiLocusModel::ExcludeMissingLoci ()
 	
 	// collect the indexes of "missing" columns
 	vector <int>	theDeadCols;	
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		if (IsColMissing (i))
 			theDeadCols.push_back (i);
@@ -694,7 +694,7 @@ bool MultiLocusModel::ExcludeMissingLoci ()
 
 void MultiLocusModel::DeleteCol (UInt iColIndex)
 {
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		if (GetPloidy() == kPloidy_Haploid)
 			(*mHaploData)[i].erase ((*mHaploData)[i].begin() + iColIndex);
@@ -734,8 +734,8 @@ void MultiLocusModel::ShuffleDataset ()
 // settings (no populations) this will shuffle the whole thing.
 void MultiLocusModel::ShufflePop (int iFrom, int iTo)
 {
-	assert ((0 <= iFrom) and (iFrom < GetNumRows()));
-	assert ((0 <= iTo) and (iTo < GetNumRows()));
+	assert ((0 <= iFrom) and (iFrom < (int) GetNumRows()));
+	assert ((0 <= iTo) and (iTo < (int) GetNumRows()));
 	assert (iFrom <= iTo);
 	
 	// if it's a population of size 1, do nothing
@@ -781,9 +781,9 @@ void MultiLocusModel::ShuffleBlock (int iFromAllele, int iToAllele,
 // iToIso
 void MultiLocusModel::SwapAllele (int iAllelePosn, int iFromIso, int iToIso)
 {
-	assert ((0 <= iAllelePosn) and (iAllelePosn < GetNumCols()));
-	assert ((0 <= iFromIso) and (iFromIso < GetNumRows()));
-	assert ((0 <= iToIso) and (iToIso < GetNumRows()));
+	assert ((0 <= iAllelePosn) and (iAllelePosn < (int) GetNumCols()));
+	assert ((0 <= iFromIso) and (iFromIso < (int) GetNumRows()));
+	assert ((0 <= iToIso) and (iToIso < (int) GetNumRows()));
 
 	// The new shuffling procedure, where missing data is held place. If
 	// either allele is missing then return from this function without
@@ -823,14 +823,14 @@ void MultiLocusModel::InitDTypeTranslations ()
 	bool	theDipTypeUnique;	
 	mDiploTrans.clear();	// array of unique dtypes
 	
-	for (int i = 0; i < GetNumCols(); i++ )	// foreach loci ...
+	for (int i = 0; i < (int) GetNumCols(); i++ )	// foreach loci ...
 	{
-		for (int k = 0; k < GetNumRows(); k++ )	// foreach isolate ...
+		for (int k = 0; k < (int) GetNumRows(); k++ )	// foreach isolate ...
 		{
 			theDipTypeUnique = true;
 			
 			// compare to the dtypes previous stored in gTransData
-			for (int m = 0; m < mDiploTrans.size(); m++)
+			for (int m = 0; m < (int) mDiploTrans.size(); m++)
 			{	
 				// !! this looks like an error (comparing to an uninited
 				// array element), but isn't - you don't traverse the target 
@@ -974,7 +974,7 @@ void MultiLocusModel::InitPaupFile (ofstream& iPaupStream)
 		
 		// prints out the translations of the distinct diplotypes?
 		iPaupStream << "\t" << "[Diplotype translations]" << endl;
-		for (int i = 0; i < mDiploTrans.size(); i++ )
+		for (int i = 0; i < (int) mDiploTrans.size(); i++ )
 		{
 			iPaupStream << "\t[ " << mDiploTrans[i].alleleA
 				<< "/" << mDiploTrans[i].alleleB << " --> "
@@ -1098,19 +1098,19 @@ void MultiLocusModel::PrintDataSet (ostream& ioOutStream)
 	// first find out how much space we have to allow for each col
 	// have a width of 3 minimum
 	int theMaxSize = 3;
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			string theDataString (GetDataString (i,j));
-			if (theMaxSize < theDataString.size())
+			if (theMaxSize < (int) theDataString.size())
 				theMaxSize = theDataString.size();
 		}
 	}
 	
 	// print the header
 	ioOutStream << "Iso   Loci: ";
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		// print leading guff
 		ioOutStream << right << setw (theMaxSize + 1) << i+1;		
@@ -1118,13 +1118,13 @@ void MultiLocusModel::PrintDataSet (ostream& ioOutStream)
 	ioOutStream << endl << endl;
 
 	// for each row (isolate)
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		// print leading guff
 		ioOutStream << right << setw (3) << i+1 << "       : ";
 		
 		// for each column (site) in row
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			ioOutStream << setw (theMaxSize + 1) << GetDataString (i,j);
 		}	
@@ -1184,7 +1184,7 @@ void MultiLocusModel::PlotDiv (int iNumSamples, ofstream& ioPlotStream)
 #endif
 // !!! END TESTING SECTION !!!
 			
-		for (int j = 0; j < theActualNumSamples; j++)
+		for (int j = 0; j < (int) theActualNumSamples; j++)
 		{
 			// 4. which loci are to be sampled?
 			Combination theLociSample;
@@ -1203,7 +1203,7 @@ void MultiLocusModel::PlotDiv (int iNumSamples, ofstream& ioPlotStream)
 					assert (thePairNum < mNumPairsIsolates);
 					
 					// for every site selected, sum the distances involved
-					for (int o = 0; o < theLociSample.Size(); o++ )
+					for (int o = 0; o < (int) theLociSample.Size(); o++ )
 					{
 						int theLociIndex = theLociSample.at(o);
 						
@@ -1577,8 +1577,8 @@ void MultiLocusModel::CalcDiversity
 		if (iDoPaupOutput)
 		{
 			iPaupStream << "BEGIN DATA;" << endl;
-			iPaupStream << "\tDIMENSIONS ntax=" << GetNumRows()
-				<< " nchar=" << GetNumCols() << "; format respectcase missing=? "
+			iPaupStream << "\tDIMENSIONS ntax=" << (int) GetNumRows()
+				<< " nchar=" << (int) GetNumCols() << "; format respectcase missing=? "
 				<< "symbols=\"0123456789abcdefghijklmnopqrstuvwxyz"
 				<< "ABCDEFGHIJKLMNOPQRSTUVWXYZ\";" << endl;
 			iPaupStream << "\tMATRIX" << endl;
@@ -1758,7 +1758,7 @@ CountGtypesFromDist (vector<int>& oDistArray)
 
 	// count the uniques
 	int theNumUniqueGtypes = 0;
-	for (int i = 0; i < theGtypeFreq.size(); i++)
+	for (int i = 0; i < (int) theGtypeFreq.size(); i++)
 	{
 		if (theGtypeFreq[i])
 			theNumUniqueGtypes++;
@@ -1806,7 +1806,7 @@ CountFreqsFromDist (vector<int>& oDistArray, vector<int>& oGtypeFreq)
 double MultiLocusModel::CalcDivFromDist (vector<int>& oDistArray)
 {
 	int theTotalDiff = 0;
-	for (int i = 0; i < oDistArray.size(); i++)
+	for (int i = 0; i < (int) oDistArray.size(); i++)
 	{
 		if (0 < oDistArray[i])
 			theTotalDiff++;
@@ -1864,7 +1864,7 @@ void MultiLocusModel::CalcNumDiff (double& iDiversity, int& iNumDiff,
 	vector<int> theGtypeFreqArray;
 	CountFreqsFromDist (theIsoDistArray, theGtypeFreqArray);
 	iMaxFreq = 0;
-	for (int i = 0; i < theGtypeFreqArray.size(); i++)
+	for (int i = 0; i < (int) theGtypeFreqArray.size(); i++)
 	{
 		if (iMaxFreq < theGtypeFreqArray[i])
 			iMaxFreq = theGtypeFreqArray[i];
@@ -1953,7 +1953,7 @@ void MultiLocusModel::CalcPorpCompat (double& iPorpCompat)
 				{
 					vector<tAllele> theSitePair = theNewGenotypes.back ();
 					bool theMatch = false;
-					for (int m = 0; m < theGenotypes.size(); m++)
+					for (int m = 0; m < (int) theGenotypes.size(); m++)
 					{
 						if ((theSitePair[0] == theGenotypes[m][0])
 							and (theSitePair[1] == theGenotypes[m][1]))
@@ -1987,14 +1987,14 @@ void MultiLocusModel::CalcPorpCompat (double& iPorpCompat)
 				theGenotypes.pop_back();
 								
 				// for every entry remaining in the genotype array
-				for (int k = 0; k < theGenotypes.size(); k++)
+				for (int k = 0; k < (int) theGenotypes.size(); k++)
 				{
 					// long theNumDiffs1 = 0, theNumDiffs2 = 0;
 					bool isGtype1Unique = true;
 					bool isGtype2Unique = true;
 					
 					// compare it to the entries in the lattice
-					for (int m = 0; m < theGraph.size(); m++)
+					for (int m = 0; m < (int) theGraph.size(); m++)
 					{
 						// theNumDiffs1 += Distance (theGenotypes[k][0], theLattice[m][0]);
 						// theNumDiffs2 += Distance (theGenotypes[k][1], theLattice[m][1]);
@@ -2075,7 +2075,7 @@ void MultiLocusModel::CalcIndexAssocRBarD (double& oIndexAssoc, double& oRBarD)
 	CalcIsoDistArray (theSumDistArray, kDistance_Relaxed);
 
 	double theSumDist = 0, theSumDistSq = 0;
-	for (int i = 0; i < mNumPairsIsolates; i++)
+	for (int i = 0; i < (int) mNumPairsIsolates; i++)
 	{
 		theSumDist += theSumDistArray[i];
 		theSumDistSq += theSumDistArray[i] * theSumDistArray[i];
@@ -2116,10 +2116,10 @@ void MultiLocusModel::OutputAsPaup (ofstream& iPaupStream)
 {
 	assert (iPaupStream);
 	
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		iPaupStream << '\t' << "iso" << i + 1 << '\t';
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			if (GetPloidy() == kPloidy_Haploid)
 				iPaupStream << GetDataString (i, j);
@@ -2233,13 +2233,13 @@ void MultiLocusModel::PrepRBarSCalc()
 	mSumVar2 = mMaxSumCov2 = 0.0;
 
 	// for each loci ...
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		long	theSumDataVals = 0;
 		long	theSumSquares = 0;
 		
 		// for each isolate ...
-		for (int k = 0; k < GetNumRows(); k++)
+		for (int k = 0; k < (int) GetNumRows(); k++)
 		{
 			long theSiteDataValue;
 			if (GetPloidy() == kPloidy_Haploid)	// haplo
@@ -2266,9 +2266,9 @@ void MultiLocusModel::PrepRBarSCalc()
 	
 	// !! for every pair of sites
 	// (i.e. every site matched which every site after them)
-	for (int i = 0; i < (GetNumCols() - 1); i++)
+	for (int i = 0; i < (int) (GetNumCols() - 1); i++)
 	{
-		for (int j = i + 1; j < GetNumCols(); j++)
+		for (int j = i + 1; j < (int) GetNumCols(); j++)
 		{
 			// calc the covariance as a product of the two sites variance
 			mMaxSumCov2 += sqrt (theVarSites[i]*theVarSites[j]);			
@@ -2289,7 +2289,7 @@ void MultiLocusModel::CalcRBarS (double& oRBarS)
 		
 		// !! for every site in that isolate, extract the rank of the 
 		// character at the site, sum it.
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			int theCharRank;
 			// at length, for edification and debugging
@@ -2343,7 +2343,7 @@ void MultiLocusModel::CalcVarSimilarityCoeff ()
 	mExpVar = 0.0;
 	
 	// for every loci do ...
-	for (int i = 0; i < GetNumCols(); i++ )
+	for (int i = 0; i < (int) GetNumCols(); i++ )
 	{
   		// count the different alleles appearing at each loci
   		
@@ -2351,7 +2351,7 @@ void MultiLocusModel::CalcVarSimilarityCoeff ()
 		Frequency 				theCharCount;
   		
   		// look at every isolate and "count" character
-  		for (int k = 0; k < GetNumRows(); k++)
+  		for (int k = 0; k < (int) GetNumRows(); k++)
   		{
 	  		if (GetPloidy() == kPloidy_Haploid)
 			{
@@ -2438,7 +2438,7 @@ void MultiLocusModel::CalcPairwiseStats (ofstream& oOutStream,
 				double theSumDist = 0;
 				double theSumSqDist = 0;
 				
-				for (int k = 1; k < GetNumRows(); k++)
+				for (int k = 1; k < (int) GetNumRows(); k++)
 				{
 					for (int m = 0; m < k; m++)
 					{
@@ -2554,7 +2554,7 @@ UInt MultiLocusModel::FindPartsLoop
 	ioPartStream << endl;
 	BackupWorkingData ();
 	
-	for (int i = 1; i <= iNumRandomizations; i++)
+	for (int i = 1; i <= (int) iNumRandomizations; i++)
 	{
 		// !! Signal progress of randomizations.
 		// TO DO: This is a bloody awful nasty hack that break the
@@ -2709,13 +2709,15 @@ bool MultiLocusModel::TestPart
 {
 	int	theNumSites = GetNumCols();
 	
+	UNUSED (iPart2);
+	
 	// test the partition at every site
 	for (int i = 0; i < theNumSites; i++)
 	{
 		Frequency theCharCount1, theCharCount2;
   		
   		// look at every isolate and "count" characters for each partition
-  		for (int j = 0; j < GetNumRows(); j++)
+  		for (int j = 0; j < (int) GetNumRows(); j++)
   		{
 	  		if (is_member (iPart1.begin(), iPart1.end(), j))
 			{
@@ -2768,31 +2770,31 @@ OutputPart (ofstream& ioPartStream, vector<int>& iPart)
 	//for (int i = 0; i < iPart.Size(); i++)
 	// print header & sizes
 	ioPartStream << "* Partition of size " << iPart.size() << " and "
-		<< GetNumRows() - iPart.size() << " found:" << endl;
+		<< (int) GetNumRows() - iPart.size() << " found:" << endl;
 	//for (int i = 0; i < iPart.Size(); i++)
 	//	ioPartStream << " " << iPart[i];
 	//ioPartStream << endl;
 
 	// find out how much space we have to allow for each col
 	int theMaxSize = 3;
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			string theDataString (GetDataString (i,j));
-			if (theMaxSize < theDataString.size())
+			if (theMaxSize < (int) theDataString.size())
 				theMaxSize = theDataString.size();
 		}
 	}
 	
 	// print individual isolates	
-	for (int i = 0; i < iPart.size(); i++)
+	for (int i = 0; i < (int) iPart.size(); i++)
 	{
 		// print leading guff
 		ioPartStream << "Isolate " << right << setw (3) << iPart[i] << " : ";
 		
 		// for each column (site) in row
-		for (int j = 0; j < GetNumCols(); j++)
+		for (int j = 0; j < (int) GetNumCols(); j++)
 		{
 			ioPartStream << setw (theMaxSize + 1) << GetDataString (iPart[i],j);
 		}
@@ -2843,7 +2845,7 @@ double MultiLocusModel::CalcThetaLoop
 	
 	int thePVal = 0;	
 		
-	for (int i = 1; i <= iNumRandomizations; i++)
+	for (int i = 1; i <= (int) iNumRandomizations; i++)
 	{
 		// Signal progress of randomizations.
 		// To Do: This is a bloody awful nasty hack that break the
@@ -3068,7 +3070,7 @@ double MultiLocusModel::CalcThetaChoiceLoop
 	InitThetaFile (ioResults);
 	iSelectedPops.Sort();
 	ioResults << "Populations selected for analysis:";
-	for (int i = 0; i < iSelectedPops.Size(); i++)
+	for (int i = 0; i < (int) iSelectedPops.Size(); i++)
 		ioResults << " " << iSelectedPops[i] + 1;
 	ioResults << endl << endl;
 	ioResults << "---" << endl;
@@ -3090,7 +3092,7 @@ double MultiLocusModel::CalcThetaChoiceLoop
 	BackupWorkingData ();
 	int thePVal = 0;	
 		
-	for (int i = 1; i <= iNumRandomizations; i++)
+	for (int i = 1; i <= (int) iNumRandomizations; i++)
 	{
 		// Signal progress of randomizations.
 		// To Do: This is a bloody awful nasty hack that break the
@@ -3154,7 +3156,7 @@ void MultiLocusModel::ShufflePops (Combination& iSelectedPops)
 	vector<int> theSelectedIsos;
 	// step through the vector of populations and collate them
 	//DBG_MSG("Shuffling pops");
-	for (int i = 0; i < iSelectedPops.Size (); i++)
+	for (int i = 0; i < (int) iSelectedPops.Size (); i++)
 	{
 		//DBG_MSG("Selecting population " << i);
 		int theFromIndex, theToIndex;
@@ -3174,7 +3176,7 @@ void MultiLocusModel::ShufflePops (Combination& iSelectedPops)
 		mLinkages.GetBounds (i, theFromLoci, theToLoci);
 
 		// for every isolate, swap with another isolate
-		for (int j = 0; j < theSelectedIsos.size(); j++)
+		for (int j = 0; j < (int) theSelectedIsos.size(); j++)
 		{
 			// select a position in the isolate list
 			int theOldPosn = theSelectedIsos[j];
@@ -3455,7 +3457,7 @@ UInt MultiLocusModel::StrictDistance (UInt iFromRowIndex, UInt iToRowIndex)
 {
 	int theSumDistances = 0;
 	
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		// !! For every site, see if the allele is different & sum diffs
 		theSumDistances += StrictDistance (iFromRowIndex, iToRowIndex, i);
@@ -3539,7 +3541,7 @@ bool MultiLocusModel::IsHomozygous (UInt iRowIndex, UInt iColIndex)
 // Does this column contain missing data?
 bool MultiLocusModel::IsColMissing (UInt iColIndex)
 {
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		if (IsMissing (i,iColIndex))
 			return true;
@@ -3551,7 +3553,7 @@ bool MultiLocusModel::IsColMissing (UInt iColIndex)
 // Are all cols missing data?
 bool MultiLocusModel::IsColMissing ()
 {
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		if (not IsColMissing (i))
 			return false;
@@ -3564,7 +3566,7 @@ bool MultiLocusModel::IsColMissing ()
 // Does this row contain missing data?
 bool MultiLocusModel::IsRowMissing (UInt iRowIndex)
 {
-	for (int i = 0; i < GetNumCols(); i++)
+	for (int i = 0; i < (int) GetNumCols(); i++)
 	{
 		if (IsMissing (iRowIndex, i))
 			return true;
@@ -3576,7 +3578,7 @@ bool MultiLocusModel::IsRowMissing (UInt iRowIndex)
 // Are all rows missing data?
 bool MultiLocusModel::IsRowMissing ()
 {
-	for (int i = 0; i < GetNumRows(); i++)
+	for (int i = 0; i < (int) GetNumRows(); i++)
 	{
 		if (not IsRowMissing (i))
 			return false;

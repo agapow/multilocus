@@ -248,7 +248,7 @@ public:
 	void	Add	(Frequency& iNewEntries)
 	{
 		// DBG_DUMP(iNewEntries);
-		for (UInt i = 0; i < iNewEntries.Size(); i++)
+		for (UInt i = 0; i < (UInt) iNewEntries.Size(); i++)
 			Increment (iNewEntries.KeyByIndex(i), iNewEntries.ValueByIndex(i));
 	}
 	
@@ -259,7 +259,7 @@ public:
 	void Dump ()
 	{
 		DBG_MSG ("Frequency contains " <<  Size() << " keys");
-		for (UInt i = 0; i < Size(); i++)
+		for (UInt i = 0; i < (UInt) Size(); i++)
 		{
 			DBG_MSG ("\tKey " << i << ": \"" << mKeys[i] << "\" -> " << mFreqs[i]);
 		}

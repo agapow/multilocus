@@ -105,12 +105,12 @@ void toLower (char* ioTargetCString);
 
 // *** STRIP WHITESPACE
 // TO DO: need for C strings?
-string_size_t eraseLeadingSpace (std::string& ioTargetStr);						
-string_size_t eraseTrailingSpace (std::string& ioTargetStr);						
-string_size_t eraseFlankingSpace (std::string& ioTargetStr);						
-string_size_t eraseInternalSpace (std::string& ioTargetStr);						
-string_size_t eraseAllSpace (std::string& ioTargetStr);						
-string_size_t reduceSpace (std::string& ioTargetStr);						
+string_size_t eraseLeadingSpace (std::string& ioTargetStr);
+string_size_t eraseTrailingSpace (std::string& ioTargetStr);
+string_size_t eraseFlankingSpace (std::string& ioTargetStr);
+string_size_t eraseInternalSpace (std::string& ioTargetStr);
+string_size_t eraseAllSpace (std::string& ioTargetStr);
+string_size_t reduceSpace (std::string& ioTargetStr);
 
 
 
@@ -123,10 +123,10 @@ toString (X iSrcVal)
 //: Attempt to convert and return any value as an stl-std::string.
 // Not a very robust proceedure, with zero error checking, but it is very
 // flexible ...
-{						
+{
 	std::string				theDestStr;
 	std::stringstream		theBuffer;
-	
+
 	theBuffer << iSrcVal;
 	/*
 	theBuffer >> theDestStr;
@@ -144,8 +144,8 @@ template <typename X>
 void
 stringTo (std::string& iSrc, X& iDest)
 //: Attempt to convert a std::string and return it as the accompanying value.
-{						
-	std::ostringstream		theBuffer (iSrc);	
+{
+	std::ostringstream		theBuffer (iSrc);
 	theBuffer >> iDest;
 }
 
@@ -167,7 +167,7 @@ split (std::string& iSrcString, OUTITER iResultIter, char iDelimiter = ' ')
 	string_size_t	theStrLen = iSrcString.length();
 	std::string			theDestString;
 	int				theNumTokens = 0;
-	
+
 	for (string_size_t i = 0; i < theStrLen; i++)
 	{
 		if (iSrcString[i] == iDelimiter)
@@ -182,7 +182,7 @@ split (std::string& iSrcString, OUTITER iResultIter, char iDelimiter = ' ')
 			theDestString += iSrcString[i];
 		}
 	}
-	
+
 	*iResultIter = theDestString;
 	return (theNumTokens + 1);
 }
@@ -195,7 +195,7 @@ join
 //: Fuse a container of strings into a single std::string, with given delimiter.
 // Basically the opposite of Split(). An evolution of Merge(), renamed so
 // it agrees with the name used in Perl & Python.
-{						
+{
 // TO DO: general container manipulation?
 // TO DO: const?
 // TO DO: can be expanded to work with c strings and multi char delimiters.
@@ -203,10 +203,10 @@ join
 
 	if (iSrcStart == iSrcStop)
 		return;
-	
+
 	oDestString += *iSrcStart;
 	iSrcStart++;
-	
+
 	for (; iSrcStart != iSrcStop; iSrcStart++)
 	{
 		oDestString += iDelimiter;
@@ -219,9 +219,9 @@ join
 #pragma mark "Pascal std::string fxns"
 
 void P2StlStr	(const uchar* iSrcPStr, std::string& ioDestStlStr);
-void P2CStr		(const uchar* iSrcPStr, char* ioDestCStr);				
+void P2CStr		(const uchar* iSrcPStr, char* ioDestCStr);
 
-void C2PStr 	(const char* iSrcCStr, uchar* ioDestPStr);								
+void C2PStr 	(const char* iSrcCStr, uchar* ioDestPStr);
 void Stl2PStr	(const std::string& iSrcStlStr, uchar* ioDestPStr);
 
 void PStrCopy	(uchar* iSrcPString, uchar* ioDestPString);
@@ -237,24 +237,23 @@ void	MakeUppercase	(char* ioTargetCString);
 void	MakeLowercase	(std::string& ioTargetString);
 void	MakeLowercase	(char* ioTargetCString);
 
-string_size_t	StripLeadingWhitespace	(std::string& ioTargetString);						
-string_size_t	StripTrailingWhitespace	(std::string& ioTargetString);							
-string_size_t	StripFlankingWhitespace	(std::string& ioTargetString);							
+string_size_t	StripLeadingWhitespace	(std::string& ioTargetString);
+string_size_t	StripTrailingWhitespace	(std::string& ioTargetString);
+string_size_t	StripFlankingWhitespace	(std::string& ioTargetString);
 
 int 	Split	(std::string& iSrcString, std::vector<std::string>& ioDestVector,
-					char iDelimiter);							
-void 	Merge (std::vector<std::string>& iSrcVector, std::string& iDestString,
-					char* iDelimiter = "");						
+					char iDelimiter);
+void 	Merge (std::vector<std::string>& iSrcVector, std::string& iDestString, char const* iDelimiter = "");
 
 int 		String2Int 	(std::string& iStlString);
 double 	String2Dbl	(std::string& iStlString);
 
-uchar*			ReturnPString	(char* iCString);							
+uchar*			ReturnPString	(char* iCString);
 const uchar*	ReturnPString	(std::string& iStlString);
 
-char* 	ReturnCString 		(uchar* iPString);							
+char* 	ReturnCString 		(uchar* iPString);
 
-uchar*	MakePString		(char* iCString);								
+uchar*	MakePString		(char* iCString);
 uchar*	MakePString		(std::string *iStlString);
 void		MakePString		(std::string& iStlString, uchar* ioPString);
 void		MakePString		(uchar* iSrcPString, uchar* ioDestPString);
@@ -283,8 +282,8 @@ void	AddExtension		(uchar* ioDestStr, uchar* iSuffixStr,
 									bool kStr_AddEllipsis = kStr_DontAddEllipsis);
 void	AddExtension		(std::string& ioDestStr, const char* iSuffixStr,
 									int iSizeLimit = kStr_NoLimit,
-									bool iAddEllipsis = kStr_DontAddEllipsis)	;	
-												
+									bool iAddEllipsis = kStr_DontAddEllipsis)	;
+
 bool	StripExtension		(uchar* ioPString);
 bool	StripExtension		(std::string& ioTargetString);
 void stripExt (std::string& ioStr);
@@ -304,8 +303,8 @@ bool ReplaceExtension 	(std::string& ioTargetString, char* iSuffixCString,
 
 void		StrConcat			(char* ioDestStr, char* iSuffixStr, int iSizeLimit,
 										bool iAddEllipsis = false);
-								
-								
+
+
 // *** PASCAL STRING FUNCTIONS
 
 bool	PStrEndsWith		(uchar* iTargetPStr, uchar* iSuffixPStr);
@@ -315,7 +314,7 @@ bool	PStrEndsWith 		(uchar* iTargetPStr, char* iSuffixCStr);
 void		PStrConcat			(uchar* ioDestStr, uchar* iSuffixStr,
 										int iSizeLimit = kStr_Limit,
 										bool iAddEllipsis = kStr_AddEllipsis);
-										
+
 bool		PStrStripSuffix	(uchar* ioPString);
 bool		PStrReplaceSuffix	(uchar* ioDestPString, uchar* iSuffixPString,
 										int iSizeLimit = kStr_Limit,
@@ -326,7 +325,7 @@ bool		PStrEndsWith		(uchar* iTestPStr, char* iSuffixStr);
 
 
 // *** STL STRING FUNCTIONS
-								
+
 void		StringConcat		(std::string& ioDestStr, const char* iSuffixStr,
 										int iSizeLimit);
 

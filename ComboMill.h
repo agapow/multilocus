@@ -107,7 +107,7 @@ public:
 		iterator theCurrIter = mSeqStart;
 		oStopOut = iStartOut;
 
-		for (int i = 0; i < mMembership.size(); i++)
+		for (int i = 0; i < (int) mMembership.size(); i++)
 		{
 			assert (theCurrIter != mSeqStop);
 			
@@ -131,7 +131,7 @@ public:
 	
 	void SetMembership (bool iIsMember)
 	{
-		for (int i = 0; i < mMembership.size(); i++)
+		for (int i = 0; i < (int) mMembership.size(); i++)
 		{
 			mMembership[i] = iIsMember;
 		}
@@ -146,7 +146,7 @@ public:
 	{
 		assert (0 < mMembership.size());
 		
-		for (int i = 0; i < mMembership.size(); i++)
+		for (int i = 0; i < (int) mMembership.size(); i++)
 		{
 			if (mMembership[i] == false)
 			{
@@ -202,7 +202,7 @@ public:
 	// is it all ones?
 	bool IsLast ()
 	{
-		for (int i = 0; i < mMembership.size(); i++)
+		for (int i = 0; i < (int) mMembership.size(); i++)
 		{
 			if (mMembership[i] == false)
 				return false;

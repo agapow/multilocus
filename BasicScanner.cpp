@@ -290,7 +290,7 @@ void BasicScanner::SkipWhileComment ()
 	DBG_BLOCK(std::string dbgStart);
 	char	theNextChar;
 	
-	for (int i = 0; i < mStartComment.length(); i++)
+	for (int i = 0; i < (int) mStartComment.length(); i++)
 	{
 		char theNextChar;
 		GetChar(theNextChar);
@@ -322,7 +322,7 @@ void BasicScanner::SkipWhileComment ()
 
 	// consume the comment stop
 	DBG_BLOCK(std::string dbgStop);
-	for (int i = 0; i < mStopComment.length(); i++)
+	for (int i = 0; i < (int) mStopComment.length(); i++)
 	{
 		char theNextChar;
 		GetChar(theNextChar);
