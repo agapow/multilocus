@@ -73,7 +73,7 @@ To Do:
 
 **************************************************************************/
 
-
+#pragma once
 #ifndef SBLDEBUG_H
 #define SBLDEBUG_H
 
@@ -86,19 +86,13 @@ To Do:
 
 // *** DEBUGGING OUTPUT **************************************************/
 
-#ifdef SBL_DBG
+#ifdef DEBUG
 
 	// *** INCLUDES
 	// Necessary for debugging output
 	
 	#include <iostream>
 	#include <string>
-	#define DEBUG_NEW	2	// for DebugNew
-	#include <DebugNew.h>
-	
-
-	// switch cassert on
-	#undef NDEBUG
 
 	// Internals
 	// defined for brevity only, should be used only to define other
@@ -150,6 +144,8 @@ To Do:
 	#define DBG_DUMP(object)			DBG_PREFIX << "*** Dumping object " << #object << " at " << \
 												(&object) << ":" << std::endl << std::flush; object.Dump(); \
 												DBG_PREFIX << "* Dump finishes " << std::endl << ::flush;
+	
+	/*
 	template <class OBJECT>
 	void
 	SBL_DBG_DUMP (OBJECT& iDebugObj)
@@ -159,6 +155,7 @@ To Do:
 			(&iDebugObj) << ":" << std::endl << std::flush; object.dump();
 		DBG_PREFIX << "* Dump finishes " << std::endl << ::flush;
 	}
+	*/
 												
 																								
 	// call Dump() function on object 
@@ -194,9 +191,6 @@ To Do:
 #else
 
 	
-	//#define NDEBUG				// switch cassert off 
-	#define DEBUG_NEW 0		// switch DebugNew off
-	
 	// In a non debug situation, the debug calls are defined as nothing. To
 	// my surprise the trailing semi-colons and empty statements aren't an
 	// error in C++
@@ -215,7 +209,7 @@ To Do:
 	#define DBG_PREFIX       std::cerr	
 	#define DBG_STREAM       std::cerr			
 
-	#define SBL_DBG_DUMP(x)
+	#define DEBUG_DUMP(x)
 	#define SBL_DBG_CTASSERT(x)  	
 #endif
 			

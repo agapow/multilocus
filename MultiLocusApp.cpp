@@ -138,17 +138,17 @@ MultiLocusApp::MultiLocusApp ()
 {
 	// info for about box
 	mAppTitle = "MultiLocus";
-	mAppVersion = "1.5";
+	mAppVersion = "1.6";
 	mAppCredits = "Paul-Michael Agapow (1) & Austin Burt (2)";
 	
 	mModel = NULL;
 	
-	mAppInfo.push_back(string("1. <mailto://multiloc@agapow.net>"));
+	mAppInfo.push_back(string("1. <mailto://paul@agapow.net>"));
 	mAppInfo.push_back(string("2. <mailto://a.burt@ic.ac.uk>"));
-	mAppInfo.push_back(string("Dept. Biology, University College London, Silwood Park"));
+	mAppInfo.push_back(string("Imperial College"));
 	mAppInfo.push_back(string(""));
 	mAppInfo.push_back(string("<http://www.agapow.net/software/multilocus/>"));
-	mAppInfo.push_back(string("June 2009"));
+	mAppInfo.push_back(string("Sept 2015"));
 	mAppInfo.push_back(string(""));
 	mAppInfo.push_back(string("If you use this software please cite:"));
 	mAppInfo.push_back(string("Agapow & Burt (2001) 'Indices of multilocus linkage"));
@@ -681,10 +681,13 @@ void MultiLocusApp::LoadDataFile ()
 		{
 			if (mModel != NULL)
 			{
-				delete mModel; 				// if data already loaded delete it
+				// if data already loaded delete it
+				delete mModel;
 				mModel = NULL;
 			}
-			mModel = new MultiLocusModel;	// create new one
+			
+			// create new one
+			mModel = new MultiLocusModel;
 			
 			ifstream theDataFileStrm  (mDataFilePath.c_str());
 			if (theDataFileStrm)

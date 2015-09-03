@@ -246,7 +246,7 @@ ParseInput (ifstream& ioInputFile, const char* iDataFileName)
 	{
 		ParseHaploidInput (theScanner, theNumCols);
 	}
-	else							// diploid
+	else // diploid
 	{
 		if (theNumSeps != theNumCols)
 			throw ParseError ("missing column delimiter", iDataFileName);
@@ -1153,7 +1153,6 @@ void MultiLocusModel::PlotDiv (int iNumSamples, ofstream& ioPlotStream)
 {	
 	// 1. init output file
 	assert (ioPlotStream);
-
 	InitPlotFile(ioPlotStream);
 	
 	// 2. count genotypes for each size
