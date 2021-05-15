@@ -55,6 +55,7 @@ To Do:
 
 #include "Sbl.h"
 #include <string>
+#include <cstring>
 #include <exception>
 
 SBL_NAMESPACE_START
